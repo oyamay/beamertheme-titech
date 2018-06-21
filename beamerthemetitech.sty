@@ -1,0 +1,102 @@
+%% Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (oyama.y.aa@m.titech.ac.jp)
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%% https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerthemetitech}[2018/06/21 v1.0 Titech Beamer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{pgfopts}
+\pgfkeys{/titech/noimg/.code=\def\titechnoimg{1}}
+\pgfkeys{/titech/pdfribbon/.code=\def\titechpdfribbon{1}}
+\pgfkeys{/titech/.cd,
+  .search also={
+    /titech/inner,
+    /titech/outer,
+    /titech/color,
+    /titech/font,
+  }
+}
+\pgfkeys{
+  /titech/titleformat plain/.cd,
+  .is choice,
+  regular/.code={%
+    \let\titech@plaintitleformat\@empty%
+    \setbeamerfont{standout}{shape=\normalfont}%
+  },
+  smallcaps/.code={%
+    \let\titech@plaintitleformat\@empty%
+    \setbeamerfont{standout}{shape=\scshape}%
+  },
+  allsmallcaps/.code={%
+    \let\titech@plaintitleformat\MakeLowercase%
+    \setbeamerfont{standout}{shape=\scshape}%
+    \PackageWarning{beamerthemetitech}{%
+      Be aware that titleformat plain=allsmallcaps can lead to problems%
+    }
+  },
+  allcaps/.code={%
+    \let\titech@plaintitleformat\MakeUppercase%
+    \setbeamerfont{standout}{shape=\normalfont}%
+    \PackageWarning{beamerthemetitech}{%
+      Be aware that titleformat plain=allcaps can lead to problems%
+    }
+  },
+}
+\pgfkeys{
+  /titech/titleformat/.code=\pgfkeysalso{
+    font/titleformat title=#1,
+    font/titleformat subtitle=#1,
+    font/titleformat section=#1,
+    font/titleformat frame=#1,
+    titleformat plain=#1,
+  }
+}
+\pgfkeys{/titech/.cd,
+  usetitleprogressbar/.code=\pgfkeysalso{outer/progressbar=frametitle},
+  noslidenumbers/.code=\pgfkeysalso{outer/numbering=none},
+  usetotalslideindicator/.code=\pgfkeysalso{outer/numbering=fraction},
+  nosectionslide/.code=\pgfkeysalso{inner/sectionpage=none},
+  darkcolors/.code=\pgfkeysalso{color/background=dark},
+  blockbg/.code=\pgfkeysalso{color/block=fill, inner/block=fill},
+}
+\newcommand{\titech@setdefaults}{
+  \pgfkeys{/titech/.cd,
+    titleformat plain=regular,
+  }
+}
+\useinnertheme{titech}
+\useoutertheme{titech}
+\usecolortheme{titech}
+\usefonttheme{titech}
+\AtEndPreamble{%
+  \@ifpackageloaded{pgfplots}{%
+    \RequirePackage{pgfplotsthemetol}
+  }{}
+}
+\newcommand{\titechset}[1]{\pgfkeys{/titech/.cd,#1}}
+\def\titech@plaintitleformat#1{#1}
+\newcommand{\plain}[2][]{%
+  \PackageWarning{beamerthemetitech}{%
+    The syntax `\plain' may be deprecated in a future version of Titech.
+    Please use a frame with [standout] instead.
+  }
+  \begin{frame}[standout]{#1}
+    \titech@plaintitleformat{#2}
+  \end{frame}
+}
+\newcommand{\mreducelistspacing}{\vspace{-\topsep}}
+\titech@setdefaults
+\ProcessPgfOptions{/titech}
+\endinput
+%%
+%% End of file `beamerthemetitech.sty'.

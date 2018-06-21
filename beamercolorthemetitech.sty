@@ -1,0 +1,127 @@
+%% Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (oyama.y.aa@m.titech.ac.jp)
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%%     https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamercolorthemetitech}[2018/06/21 v1.0 Titech Beamer theme]
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /titech/color/block/.cd,
+    .is choice,
+    transparent/.code=\titech@block@transparent,
+    fill/.code=\titech@block@fill,
+}
+\pgfkeys{
+  /titech/color/background/.cd,
+    .is choice,
+    light/.code=\titech@colors@light,
+}
+\newcommand{\titech@color@setdefaults}{
+  \pgfkeys{/titech/color/.cd,
+    background=light,
+    block=transparent,
+  }
+}
+\definecolor{mDarkYellow}{HTML}{987D1C}
+\definecolor{mDarkRed}   {HTML}{CC0016}
+\definecolor{mDarkBlue}  {HTML}{092148}
+\definecolor{mLightBlue} {HTML}{19577C}
+\newcommand{\titech@colors@light}{
+  \setbeamercolor{normal text}{%
+    fg=black,
+    bg=white
+  }
+}
+\setbeamercolor{alerted text}{%
+  fg=mDarkRed
+}
+\setbeamercolor{example text}{%
+  fg=mLightBlue
+}
+\setbeamercolor{titlelike}{use=normal text, parent=normal text}
+\setbeamercolor{author}{use=normal text, parent=normal text}
+\setbeamercolor{date}{use=normal text, parent=normal text}
+\setbeamercolor{institute}{use=normal text, parent=normal text}
+\setbeamercolor{structure}{use=normal text, fg=normal text.fg}
+\setbeamercolor{palette primary}{%
+  use=normal text,
+  fg=normal text.bg,
+  bg=mDarkYellow
+}
+\setbeamercolor{frametitle}{%
+  use=normal text
+}
+\setbeamercolor{frametitlebar}{%
+  use=palette primary,
+  parent=palette primary
+}
+\setbeamercolor{progress bar}{%
+  use=normal text,
+  fg=mLightBlue,
+  bg=mLightBlue!50!black!30
+}
+\setbeamercolor{title separator}{
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in head/foot}{%
+  use=progress bar,
+  parent=progress bar
+}
+\setbeamercolor{progress bar in section page}{
+  use=progress bar,
+  parent=progress bar
+}
+\newcommand{\titech@block@transparent}{
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=
+  }
+  \setbeamercolor{block body}{
+    bg=
+  }
+}
+\newcommand{\titech@block@fill}{
+  \setbeamercolor{block title}{%
+    use=normal text,
+    fg=normal text.fg,
+    bg=normal text.bg!80!fg
+  }
+  \setbeamercolor{block body}{
+    use={block title, normal text},
+    bg=block title.bg!50!normal text.bg
+  }
+}
+\setbeamercolor{block title alerted}{%
+    use={block title, alerted text},
+    bg=block title.bg,
+    fg=alerted text.fg
+}
+\setbeamercolor{block title example}{%
+    use={block title, example text},
+    bg=block title.bg,
+    fg=example text.fg
+}
+\setbeamercolor{block body alerted}{use=block body, parent=block body}
+\setbeamercolor{block body example}{use=block body, parent=block body}
+\setbeamercolor{footnote}{fg=normal text.fg!90}
+\setbeamercolor{footnote mark}{fg=.}
+\setbeamercolor{headline}{fg=normal text.bg, bg=mDarkYellow}
+\setbeamercolor{section in head/foot}{fg=normal text.bg, bg=mDarkYellow}
+\titech@color@setdefaults
+\ProcessPgfPackageOptions{/titech/color}
+\mode<all>
+\endinput
+%%
+%% End of file `beamercolorthemetitech.sty'.

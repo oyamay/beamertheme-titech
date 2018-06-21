@@ -1,0 +1,152 @@
+%% Tokyo Tech-flavored Metropolis theme by Yosuke Oyama (oyama.y.aa@m.titech.ac.jp)
+%% The original template was based on the Metropolis theme, as follows:
+%%
+%% ---------------------------------------------------------------------------
+%% Copyright 2015 Matthias Vogelgesang and the LaTeX community. A full list of
+%% contributors can be found at
+%%
+%% https://github.com/matze/mtheme/graphs/contributors
+%%
+%% and the original template was based on the HSRM theme by Benjamin Weiss.
+%%
+%% This work is licensed under a Creative Commons Attribution-ShareAlike 4.0
+%% International License (https://creativecommons.org/licenses/by-sa/4.0/).
+%% ---------------------------------------------------------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beamerouterthemetitech}[2018/06/21 v1.0 Titech Beamer theme]
+\RequirePackage{etoolbox}
+\RequirePackage{calc}
+\RequirePackage{pgfopts}
+\pgfkeys{
+  /titech/outer/numbering/.cd,
+  .is choice,
+  none/.code=\setbeamertemplate{frame numbering}[none],
+  counter/.code=\setbeamertemplate{frame numbering}[counter],
+  fraction/.code=\setbeamertemplate{frame numbering}[fraction],
+}
+\pgfkeys{
+  /titech/outer/progressbar/.cd,
+  .is choice,
+  none/.code={%
+    \setbeamertemplate{headline}[plain]
+    \setbeamertemplate{frametitle}[plain]
+    \setbeamertemplate{footline}[plain]
+  },
+  head/.code={\pgfkeys{/titech/outer/progressbar=none}
+    \addtobeamertemplate{headline}{}{%
+      \usebeamertemplate*{progress bar in head/foot}
+    }
+  },
+  frametitle/.code={\pgfkeys{/titech/outer/progressbar=none}
+    \addtobeamertemplate{frametitle}{}{%
+      \usebeamertemplate*{progress bar in head/foot}
+    }
+  },
+  foot/.code={\pgfkeys{/titech/outer/progressbar=none}
+    \addtobeamertemplate{footline}{}{%
+      \usebeamertemplate*{progress bar in head/foot}%
+    }
+  },
+}
+\newcommand{\titech@outer@setdefaults}{
+  \pgfkeys{/titech/outer/.cd,
+    numbering=counter,
+    progressbar=none,
+  }
+}
+\setbeamertemplate{navigation symbols}{}
+\defbeamertemplate{frame footer}{none}{}
+\defbeamertemplate{frame footer}{custom}[1]{ #1 }
+\defbeamertemplate{frame numbering}{none}{}
+\defbeamertemplate{frame numbering}{counter}{\insertframenumber}
+\defbeamertemplate{frame numbering}{fraction}{
+  \insertframenumber/\inserttotalframenumber
+}
+\defbeamertemplate{headline}{plain}{}
+\defbeamertemplate{footline}{plain}{%
+  \begin{beamercolorbox}[wd=\textwidth, sep=3ex]{footline}%
+    \usebeamerfont{page number in head/foot}%
+    \usebeamertemplate*{frame footer}
+    \hfill%
+    \usebeamertemplate*{frame numbering}
+  \end{beamercolorbox}%
+}
+\newlength{\titech@frametitle@padding}
+\setlength{\titech@frametitle@padding}{2.2ex}
+\newcommand{\titech@frametitlestrut@start}{
+  \rule{0pt}{\titech@frametitle@padding +%
+    \totalheightof{%
+      \ifcsdef{titech@frametitleformat}{\titech@frametitleformat X}{X}%
+    }%
+  }%
+}
+\newcommand{\titech@frametitlestrut@end}{
+  \rule[-\titech@frametitle@padding]{0pt}{\titech@frametitle@padding}
+}
+\defbeamertemplate{frametitle}{plain}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[%
+    wd=\paperwidth,%
+    sep=0pt,%
+    leftskip=\titech@frametitle@padding,%
+    rightskip=\titech@frametitle@padding,%
+    ]{frametitlebar}%
+    {\footnotesize \insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt plus1filll}}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[%
+    wd=\paperwidth,%
+    sep=0pt,%
+    leftskip=\titech@frametitle@padding,%
+    rightskip=\titech@frametitle@padding,%
+    ]{frametitle}%
+    \titech@frametitlestrut@start%
+    \insertframetitle%
+    \nolinebreak%
+    \titech@frametitlestrut@end%
+  \end{beamercolorbox}%
+  \begin{tikzpicture}[remember picture,overlay]%
+    \node[xshift=11cm,yshift=0.83cm]{%
+      \ifx\titechnoimg\undefined
+      \ifx\titechpdfribbon\undefined
+      \includegraphics[width=1cm]{ribbon_small.png}%
+      \else
+      \includegraphics[width=1cm]{ribbon_small.pdf}%
+      \fi
+      \else
+      \input{ribbon_small.tex}
+      \fi
+    };%
+  \end{tikzpicture}%
+}
+\setbeamertemplate{frametitle continuation}{%
+  \usebeamerfont{frametitle}
+  \romannumeral \insertcontinuationcount
+}
+\newlength{\titech@progressinheadfoot}
+\newlength{\titech@progressinheadfoot@linewidth}
+\setlength{\titech@progressinheadfoot@linewidth}{2pt}
+\setbeamertemplate{progress bar in head/foot}{
+  \nointerlineskip
+  \setlength{\titech@progressinheadfoot}{%
+    \paperwidth * \ratio{\insertframenumber pt}{\inserttotalframenumber pt}%
+  }%
+  \begin{beamercolorbox}[wd=\paperwidth]{progress bar in head/foot}
+    \begin{tikzpicture}
+      \fill[bg] (0,0) rectangle (\paperwidth, \titech@progressinheadfoot@linewidth);
+      \fill[fg] (0,0) rectangle (\titech@progressinheadfoot, \titech@progressinheadfoot@linewidth);
+    \end{tikzpicture}%
+  \end{beamercolorbox}
+}
+\AtBeginDocument{%
+  \apptocmd{\appendix}{%
+    \pgfkeys{%
+      /titech/outer/.cd,
+      numbering=none,
+      progressbar=none}
+  }{}{}
+}
+\titech@outer@setdefaults
+\ProcessPgfPackageOptions{/titech/outer}
+\endinput
+%%
+%% End of file `beamerouterthemetitech.sty'.
