@@ -1,6 +1,9 @@
 # Tokyo Tech-flavored Metropolis Theme
+<p align="center">
 ![](misc/preview_1.png)
 ![](misc/preview_2.png)
+</p>
+
 The cover photo and the Tokyo Tech seals belong to Tokyo Institute of Technology.
 
 **Tokyo Tech-flavored Metropolis Theme** is a Beamer theme that imitates [Tokyo Tech's PowerPoint template](https://www.titech.ac.jp/staff/rules/logo/file/ppt_en.pptx).
