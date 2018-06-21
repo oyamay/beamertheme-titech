@@ -1,7 +1,7 @@
 # Tokyo Tech-flavored Metropolis Theme
 <p align="center">
-![](misc/preview_1.png)
-![](misc/preview_2.png)
+<img src="https://github.com/oyamay/beamertheme-titech/raw/master/misc/preview_1.png">
+<img src="https://github.com/oyamay/beamertheme-titech/raw/master/misc/preview_2.png">
 </p>
 
 The cover photo and the Tokyo Tech seals belong to Tokyo Institute of Technology.
