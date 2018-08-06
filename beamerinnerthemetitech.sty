@@ -54,7 +54,8 @@
     };%
   \end{tikzpicture}%
   \begin{minipage}[t][\paperheight]{\textwidth}
-    \vspace{4.1cm}%
+    \vspace{1.3cm}%
+    \vspace{0.21875\paperwidth}
     \begin{beamercolorbox}[%
       wd=\paperwidth,%
       sep=0pt,%
@@ -63,8 +64,10 @@
       ]{frametitlebar}%
       \phantom{x}%
     \end{beamercolorbox}%
+    \vspace{-0.21875\paperwidth}%
+    \vspace{2.8cm}%
     \begin{tikzpicture}[remember picture,overlay]%
-      \node[xshift=10cm,yshift=0cm]{%
+      \node[xshift={\paperwidth-3cm},yshift=0cm]{%
         \ifx\titechnoimg\undefined
         \ifx\titechpdfribbon\undefined
         \includegraphics[width=2cm]{ribbon_big.png}%
